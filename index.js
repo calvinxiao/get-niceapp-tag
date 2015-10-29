@@ -26,9 +26,11 @@ co(function* () {
     var processList = [];
     console.info(config.concurrent);
     _.times(config.concurrent, function() {
-        var tagId = getNextTagId();
         co(function* () {
-            yield processTagId(tagId);
+            while (tagId) {
+                yield processTagId(tagId);
+                var tagId = getNextTagId();
+            }
         }).catch(function (err) {
             console.error(err.stack);
         });
@@ -42,18 +44,17 @@ co(function* () {
 
 function* processTagId(tagId) {
     // get the html, parse it, save to mongodb
-    var parsedObj = yield getTag(tagId);
-    if (parsedObj) {
-        yield db.addTag(parsedObj);
-        // success, add the count
-        count += 1;
-        console.info('done processing id: ' + tagId, 'status:', count, '/', endTagId, 'tagName: ', parsedObj.tag);
+    try {
+        var parsedObj = yield getTag(tagId);
+        if (parsedObj) {
+            yield db.addTag(parsedObj);
+            // success, add the count
+            count += 1;
+            console.info('done processing id: ' + tagId, 'status:', count, '/', endTagId, 'tagName: ', parsedObj.tag);
+        }
+    } catch(e) {
+        console.error(e.stack);
     }
-
-    return co(function* () {
-        yield processTagId(getNextTagId());
-    });
-
 }
 
 
