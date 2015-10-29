@@ -30,13 +30,13 @@ co(function* () {
         co(function* () {
             yield processTagId(tagId);
         }).catch(function (err) {
-            console.error(err);
+            console.error(err.stack);
         });
     });
 
     yield processList;
 }).catch(function(err) {
-    console.error(err);
+    console.error(err.stack);
 });
 
 
