@@ -12,7 +12,7 @@ var db = require('./db');
 var parser = require('./parsehtml');
 
 var isTagIdDone = {};
-var startTagId = 1;
+var startTagId = 388865;
 var endTagId = 70395500; // you can binary search the max id when you encounter it
 var count = 0;
 
@@ -28,6 +28,7 @@ co(function* () {
     _.times(config.concurrent, function() {
         co(function* () {
             var tagId = getNextTagId();
+            console.info(tagId);
             while (tagId) {
                 yield processTagId(tagId);
                 tagId = getNextTagId();
