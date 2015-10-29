@@ -27,9 +27,10 @@ co(function* () {
     console.info(config.concurrent);
     _.times(config.concurrent, function() {
         co(function* () {
+            var tagId = getNextTagId();
             while (tagId) {
                 yield processTagId(tagId);
-                var tagId = getNextTagId();
+                tagId = getNextTagId();
             }
         }).catch(function (err) {
             console.error(err.stack);
