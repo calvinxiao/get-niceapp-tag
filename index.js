@@ -45,10 +45,11 @@ function* processTagId(tagId) {
     var parsedObj = yield getTag(tagId);
     if (parsedObj) {
         yield db.addTag(parsedObj);
+        // success, add the count
+        count += 1;
+        console.info('done processing id: ' + tagId, 'status:', count, '/', endTagId, 'tagName: ', parsedObj.tag);
     }
-    // success, add the count
-    count += 1;
-    console.info('done processing id: ' + tagId, 'status:', count, '/', endTagId, 'tagName: ', parsedObj.tag);
+
     return co(function* () {
         yield processTagId(getNextTagId());
     });
