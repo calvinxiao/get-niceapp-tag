@@ -1,0 +1,10 @@
+{
+  "dbConnectionUrl": "mongodb://192.168.2.22:8000/webcrawler",
+  "collections": {
+    "niceTag": "niceTag"
+  },
+  "concurrent": 500,
+  "url": {
+    "tag": "http://www.oneniceapp.com/tag/undefined/%d"
+  }
+}
