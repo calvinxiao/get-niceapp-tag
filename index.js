@@ -43,7 +43,9 @@ co(function* () {
 function* processTagId(tagId) {
     // get the html, parse it, save to mongodb
     var parsedObj = yield getTag(tagId);
-    yield db.addTag(parsedObj);
+    if (parsedObj) {
+        yield db.addTag(parsedObj);
+    }
     // success, add the count
     count += 1;
     console.info('done processing id: ' + tagId, 'status:', count, '/', endTagId, 'tagName: ', parsedObj.tag);
