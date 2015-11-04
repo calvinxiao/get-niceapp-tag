@@ -3,7 +3,7 @@
   "collections": {
     "niceTag": "niceTag"
   },
-  "concurrent": 500,
+  "concurrent": 200,
   "url": {
     "tag": "http://www.oneniceapp.com/tag/undefined/%d"
   }

@@ -12,18 +12,23 @@ var db = require('./db');
 var parser = require('./parsehtml');
 
 var isTagIdDone = {};
-var startTagId = 388865;
+var startTagId = 12472213;
 var endTagId = 70395500; // you can binary search the max id when you encounter it
 var count = 0;
 
+var dnscache = require('dnscache')({
+        "enable" : true,
+        "ttl" : 300,
+        "cachesize" : 1000
+    });
+
 
 co(function* () {
-    var tagIds = yield db.getNiceTagIds();
-    count = tagIds.length;
-    console.info('tags in db, count = ' + tagIds.length);
-    _.each(tagIds, function(tagId) {isTagIdDone[tagId] = true});
+    //var tagIds = yield db.getNiceTagIds();
+    count = startTagId-1;//tagIds.length;
+    console.info('tags in db, count = ' + count);
+    //_.each(tagIds, function(tagId) {isTagIdDone[tagId] = true});
 
-    var processList = [];
     console.info(config.concurrent);
     _.times(config.concurrent, function() {
         co(function* () {
@@ -37,10 +42,9 @@ co(function* () {
             console.error(err.stack);
         });
     });
-
-    yield processList;
 }).catch(function(err) {
     console.error(err.stack);
+    process.exit();
 });
 
 
