@@ -12,7 +12,7 @@ var db = require('./db');
 var parser = require('./parsehtml');
 
 var isTagIdDone = {};
-var startTagId = 12472213;
+var startTagId = 17821473;
 var endTagId = 70395500; // you can binary search the max id when you encounter it
 var count = 0;
 
